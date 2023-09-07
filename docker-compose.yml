@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  paranoia_rollbot:
+    build:
+      context: .
+    environment:
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      - DISCORD_CHANNEL_ID=${DISCORD_CHANNEL_ID}
+    volumes:
+      - "./:/usr/src/app"
+    container_name: python_script_container
+
