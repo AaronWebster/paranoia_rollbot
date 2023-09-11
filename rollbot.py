@@ -53,9 +53,9 @@ def DiceRollFromString(roll_string: str) -> str:
   """
   roll_string = roll_string.strip().replace(' ', '')
 
-  roll_expression, variables_expression = (
-      roll_string.split(';') if ';' in roll_string else (roll_string, '')
-  )
+  roll_expression, variables_expression = (roll_string.split(';')
+                                           if ';' in roll_string else
+                                           (roll_string, ''))
 
   dice_roll_expressions = re.findall(r'([\d\.]+)d([\d\.]+)', roll_expression)
   result_expression = roll_expression
@@ -63,8 +63,7 @@ def DiceRollFromString(roll_string: str) -> str:
     dice_count, dice_sides = map(float, expr)
     dice_results = DiceRoll(int(dice_sides), dice_count)
     result_expression = result_expression.replace(
-        f'{expr[0]}d{expr[1]}', ' + '.join(map(str, dice_results)), 1
-    )
+        f'{expr[0]}d{expr[1]}', ' + '.join(map(str, dice_results)), 1)
 
   if variables_expression:
     variables = {
@@ -112,15 +111,9 @@ async def roll_all(ctx, arg='1d20'):
 
   present_members = []
   for member in ctx.guild.members:
-    if (
-        (
-            member.status == discord.Status.online
-            or member.status == discord.Status.idle
-            or member.status == discord.Status.dnd
-        )
-        and not member.bot
-        and member not in present_members
-    ):
+    if ((member.status == discord.Status.online or member.status
+         == discord.Status.idle or member.status == discord.Status.dnd) and
+        not member.bot and member not in present_members):
       present_members.append(member)
 
   roll_results = [
@@ -139,9 +132,8 @@ async def roll_single(ctx, arg='1d20'):
     return
 
   await ctx.message.delete()
-  await ctx.send(
-      '{}: {}'.format(ctx.message.author.display_name, DiceRollFromString(arg))
-  )
+  await ctx.send('{}: {}'.format(ctx.message.author.display_name,
+                                 DiceRollFromString(arg)))
 
 
 # Run the bot
